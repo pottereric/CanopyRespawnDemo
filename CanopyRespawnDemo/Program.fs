@@ -6,23 +6,23 @@ open Respawn
 start firefox
 pin FullScreen
 
-let ResetTheDatabase _ =
-    let testCheckpoint = new Checkpoint()
-    testCheckpoint.TablesToIgnore <- 
-        [|"ClusterGroup";
-        "Cluster";
-        "VolunteerType";
-        "ResourceType";
-        "VolunteerType";
-        "Organization";
-        "Person";
-        "webpages_Membership";
-        "webpages_Roles";
-        "webpages_OAuthMembership";
-        "webpages_UsersInRoles";
-        "User"|]
-    testCheckpoint.Reset("Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ChrisisCheckin;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False").Wait()
+let testCheckpoint = new Checkpoint()
+testCheckpoint.TablesToIgnore <- 
+    [|"ClusterGroup";
+    "Cluster";
+    "VolunteerType";
+    "ResourceType";
+    "VolunteerType";
+    "Organization";
+    "Person";
+    "webpages_Membership";
+    "webpages_Roles";
+    "webpages_OAuthMembership";
+    "webpages_UsersInRoles";
+    "User"|]
 
+let ResetTheDatabase _ =
+    testCheckpoint.Reset("Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ChrisisCheckin;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False").Wait()
 
 once( fun _ ->
     ResetTheDatabase()
